@@ -115,6 +115,38 @@ app.listen(PORT, () => {
 });
 ```
 
+4. Menambahkan fungsi post di src/controllers/productController.ts
+
+```
+export const createProduct = (req: Request, res: Response): void => {
+    const {name, price} = req.body ?? {};
+
+    const lastProduct = products[products.length - 1];
+    const newId = lastProduct ? lastProduct.id + 1 : 1;
+    
+
+    const newProduct: Product = {
+        id: newId,
+        name,
+        price: Number(price),
+    }
+    
+    products.push(newProduct);
+    res.status(201).json(newProduct);
+};
+```
+
+5. Tambahkan route dan ubah importnya
+
+Di `src/routes/productRoutes.ts`:
+
+```
+import { getAllProducts, getProductById, createProduct } from '../controllers/productController.js';
+
+// Route /products
+router.post('/', createProduct);
+```
+
 ## Fourth Step 
 
 Tambahkan kode ini di package.json agar tidak perlu compile manual tiap mau nyoba codenya. Tinggal ketik perintah `npm start` di terminal.
@@ -127,7 +159,7 @@ Tambahkan kode ini di package.json agar tidak perlu compile manual tiap mau nyob
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts"
+    "start": "tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -213,6 +245,18 @@ Diawal tadi aku melakukan perubahan di verbatimModulSyntax yang awalnya true men
    <img width="1076" height="631" alt="image" src="https://github.com/user-attachments/assets/6c303060-febb-4fc1-b9a0-3f931e0ba9f4" />
 
    b. Mengambil product by Id
+   
+   <img width="1072" height="564" alt="image" src="https://github.com/user-attachments/assets/7e108db5-4efa-41e3-a23b-bf5f8cb619cc" />
+
+   c. Jika Id tidak ditemukan
+
+   <img width="1078" height="541" alt="image" src="https://github.com/user-attachments/assets/ae1136e0-41b1-4195-bbaf-b203ee78eea7" />
+
+3. Pengetesan fungsi POST
+
+   <img width="1078" height="720" alt="image" src="https://github.com/user-attachments/assets/92a93fda-a52a-400b-aa8a-4d881b5b1648" />
+
+
 
    
 
