@@ -33,7 +33,8 @@ tugas-api/
 <img width="450" height="391" alt="image" src="https://github.com/user-attachments/assets/0f17f65d-4084-42f8-98f3-ae83cf55774f" />
 
 ## Third steps
-Membuat kode untuk array dan logika bisnisnya di `./controllers/productController.ts`:
+
+1. Membuat kode untuk array dan logika bisnisnya di `src/controllers/productController.ts`:
 
 ```
 import { Request, Response } from 'express';
@@ -76,7 +77,7 @@ Interface berfungsi untuk menentukan struktur (kontrak) dari suatu objek, dimana
 
 Void di typescript sendiri itu berarti fungsi tersebut tidak mengembalikan nilai apapun. 
 
-Membuat kode untuk routes API nya di `src/routes/productRoutes.ts`:
+2. Membuat kode untuk routes API nya di `src/routes/productRoutes.ts`:
 
 ```
 import { Router } from 'express';
@@ -95,7 +96,7 @@ export default router;
 
 Pastikan untuk menambahkan ekstensi js mespkipun kita menggunakan Typescript sesuai dengan standar ESM.
 
-Membuat kode di index.ts untuk mengkonfigurasi portnya:
+3. Membuat kode di `src/index.ts` untuk mengkonfigurasi portnya:
 
 ```
 import express, { Application } from 'express';
