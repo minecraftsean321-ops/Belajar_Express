@@ -197,3 +197,22 @@ file tsconfig.json:
 }
 ```
 Diawal tadi aku melakukan perubahan di verbatimModulSyntax yang awalnya true menjadi false. 
+
+## Pengujian 
+
+1. Jalankan server express
+
+   ```
+    npm start
+   ```
+
+2. Uji 3 Skenario di Postman
+
+   a. Mengambil semua produk pakai method GET
+
+   <img width="1076" height="631" alt="image" src="https://github.com/user-attachments/assets/6c303060-febb-4fc1-b9a0-3f931e0ba9f4" />
+
+   b. Mengambil product by Id
+
+   
+
