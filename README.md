@@ -146,6 +146,8 @@ Tambahkan kode ini di package.json agar tidak perlu compile manual tiap mau nyob
 }
 ```
 
+Disitu aku juga merubah type nya dadi "module".
+
 file tsconfig.json:
 
 ```
@@ -165,7 +167,7 @@ file tsconfig.json:
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
-
+    
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
@@ -194,3 +196,4 @@ file tsconfig.json:
   }
 }
 ```
+Diawal tadi aku melakukan perubahan di verbatimModulSyntax yang awalnya true menjadi false. 
