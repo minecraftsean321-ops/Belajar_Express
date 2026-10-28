@@ -7,7 +7,7 @@ Menginisialisasi project dengan perintah berikut:
 ```bash
 npm init -y
 npm install express
-npm install -D typescript ts-node @types/node @types/express
+npm install -D tsx
 npx tsc --init
 ```
 `npm init -y` : Perintah ini digunakan untuk membuat file package.json secara otomatis yang nantinya berisi identitas dari project yang kita miliki seperti nama project, versi, script untuk running, serta daftar library/paket yang kita install.
