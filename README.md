@@ -68,7 +68,7 @@ export const getProductByID = (req: Request, res: Response): void => {
         return;
     }
 
-    res.status(200).json(products);
+    res.status(200).json(product);
 }
 
 ```
