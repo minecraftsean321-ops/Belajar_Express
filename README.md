@@ -115,7 +115,7 @@ app.listen(PORT, () => {
 });
 ```
 
-4. Menambahkan fungsi post di src/controllers/productController.ts
+4. Menambahkan fungsi post di `src/controllers/productController.ts`
 
 ```
 export const createProduct = (req: Request, res: Response): void => {
