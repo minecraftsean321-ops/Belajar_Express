@@ -7,57 +7,109 @@ Menginisialisasi project dengan perintah berikut:
 ```bash
 npm init -y
 npm install express
+npm install -D typescript ts-node @types/node @types/express
+npx tsc --init
 ```
 `npm init -y` : Perintah ini digunakan untuk membuat file package.json secara otomatis yang nantinya berisi identitas dari project yang kita miliki seperti nama project, versi, script untuk running, serta daftar library/paket yang kita install.
 `npm install express` : Perintah ini digunakan untuk menginstall library express di project yang akan kita gunakan. Akan muncul folder `node_modules` (tempat menyimpan kode library express).
-
-<img width="447" height="203" alt="image" src="https://github.com/user-attachments/assets/4cbab4c2-ba95-4e13-a32e-0e01a139b9b1" />
+`npm install -D typescript ts-node @types/node @types/express` : Perintah ini untuk install typescript dan tools pendukungnya.
+`npx tsc --init` : Untuk membuat file konfigurasi tsconfig.json.
 
 ## Second steps
 Membuat struktur folder:
 
 ```text
 tugas-api/
-├── controllers/
-│   └── productController.js
-├── routes/
-│   └── productRoutes.js
-├── index.js
-└── package.json
+├── src/
+│   ├── controllers/
+│   │   └── productController.ts
+│   ├── routes/
+│   │   └── productRoutes.ts
+│   └── index.ts
+├── package.json
+└── tsconfig.json
 ```
 
-<img width="448" height="384" alt="image" src="https://github.com/user-attachments/assets/d429e2f6-8392-4868-86bb-2e9b50345e49" />
+<img width="450" height="391" alt="image" src="https://github.com/user-attachments/assets/0f17f65d-4084-42f8-98f3-ae83cf55774f" />
 
 ## Third steps
 Membuat kode untuk array dan logika bisnisnya di `./controllers/productController.ts`:
 
 ```
-//Membuat array untuk product 
-const products = [
-    {id: 1, name:'Buku', price: 15000},
-    {id: 2, name: 'Pulpen', price: 5000}
+import { Request, Response } from 'express';
 
+//Interface untuk struktur data produk
+interface Product{
+    id: number;
+    name: string;
+    price: number;
+}
+
+const products: Product[] = [
+    {id: 1, name: 'Buku', price: 15000},
+    { id: 2, name: 'Pulpen', price: 5000}
 ];
 
-//Fungsi getall
-const getAllProducts = (req, res) => {
+
+//Fungsi GET All products
+export const getAllProducts = (req: Request, res: Response): void => {
     res.status(200).json(products);
 };
 
-//Fungsi get by id
-const getProductById = (req, res) => {
-    const id = parseInt(req.params.id);
-    const product = products.find((p) => p.id === id);
+//Fungsi GET Products by ID
+export const getProductByID = (req: Request, res: Response): void => {
+    const { id } = req.params;
+    const productId = parseInt(String(id), 10);
+    const product = products.find((p) => p.id === productId);
 
-    if(!product) {
-        return res.status(404).json({message:  'produk tidak ditemukan'});
+    if (!product) {
+        res.status(404).json({message: 'produk tidak ditemukan'});
+        return;
     }
 
-    res.status(200).json(product);
+    res.status(200).json(products);
 }
 
-module.exports = {
-    getAllProducts,
-    getProductById,
-};
+```
+
+Interface berfungsi untuk menentukan struktur (kontrak) dari suatu objek, dimana jika terjadi typo si typescript bisa langsung mengingatkan kita. Tidak seperti di javacript yang jika kita typo akan dibiarin aja. Selain itu interface ini juga bisa mengaktifkan Auto-completion dari Vs Code untuk merekomendasikan struktur data dari products misalnya.
+
+Void di typescript sendiri itu berarti fungsi tersebut tidak mengembalikan nilai apapun. 
+
+Membuat kode untuk routes API nya di `src/routes/productRoutes.ts`:
+
+```
+import { Router } from 'express';
+import { getAllProducts, getProductById } from '../controllers/productController.js';
+
+const router = Router();
+
+// Route /products
+router.get('/', getAllProducts);
+
+// Route /products/:id
+router.get('/:id', getProductById);
+
+export default router;
+```
+
+Pastikan untuk menambahkan ekstensi js mespkipun kita menggunakan Typescript sesuai dengan standar ESM.
+
+Membuat kode di index.ts untuk mengkonfigurasi portnya:
+
+```
+import express, { Application } from 'express';
+import productRoutes from './routes/productRoutes.js';
+
+const app: Application = express();
+const PORT = 3000;
+
+app.use(express.json());
+
+// Main route
+app.use('/products', productRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
 ```
